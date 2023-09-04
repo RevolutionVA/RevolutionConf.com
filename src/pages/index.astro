@@ -1,0 +1,24 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { Image } from "astro:assets";
+
+import RevConfLogo from "../assets/RevolutionConfLogo.png";
+---
+
+<Layout title="RevolutionConf">
+  <main class="container mx-auto">
+	<div class="mx-auto w-full sm:w-1/2">
+		<Image src={RevConfLogo} alt="RevolutionConf Logo" class="max-h-52 w-auto mx-auto mt-10"  />
+		<div class="text-white">
+			<h1 class="text-4xl font-bold">RevolutionConf</h1>
+			<p class="text-xl pt-5">RevolutionConf was a two-day, software development conference held in Virginia Beach, VA. </p>
+			<p class="text-xl pt-5">There is currently no plan to hold another RevolutionConf.</p> 
+			<p class="text-xl pt-5">However, this can change!  Send us a message at <a class="text-black font-bold hover:underline" href="mailto:team@revolutionva.org">team@revolutionva.org</a> telling us you want to see a new RevolutionConf!</p>
+			<p class="text-xl pt-5">You can also follow us on <a class="text-black font-bold hover:underline" target="_blank" href="https://twitter.com/revconf">X (Twitter)</a> to stay up to date on any future events.</p>
+		</div>
+	</div>
+  </main>
+</Layout>
+
+<style>
+</style>
