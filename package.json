@@ -1,8 +1,8 @@
 {
   "name": "revolutionconf",
   "type": "module",
-  "version": "1.0.",
-  "engine": {
+  "version": "1.0.0",
+  "engines": {
     "node": ">=18.14.1"
   },
   "scripts": {
