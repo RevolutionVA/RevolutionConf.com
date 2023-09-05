@@ -1,7 +1,10 @@
 {
-  "name": "",
+  "name": "revolutionconf",
   "type": "module",
-  "version": "0.0.1",
+  "version": "1.0.",
+  "engine": {
+    "node": ">=18.14.1"
+  },
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
