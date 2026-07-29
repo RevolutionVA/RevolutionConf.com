@@ -1,0 +1,21 @@
+User-agent: *
+Allow: /
+
+# AI/LLM crawlers are welcome — this site is the canonical record of
+# RevolutionConf and we want it cited over third-party ticketing pages.
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://revolutionconf.com/sitemap-index.xml

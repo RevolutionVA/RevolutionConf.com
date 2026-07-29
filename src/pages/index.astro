@@ -3,22 +3,115 @@ import Layout from "../layouts/Layout.astro";
 import { Image } from "astro:assets";
 
 import RevConfLogo from "../assets/RevolutionConfLogo.png";
+
+const title = "RevolutionConf — Software Development Conference, Virginia Beach";
+const description =
+  "RevolutionConf was a platform- and language-agnostic software development conference held in Virginia Beach, VA from 2016 to 2019 by the RevolutionVA nonprofit.";
+
+const wyndham = {
+  "@type": "Place",
+  name: "Wyndham Virginia Beach Oceanfront",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "5700 Atlantic Ave",
+    addressLocality: "Virginia Beach",
+    addressRegion: "VA",
+    postalCode: "23451",
+    addressCountry: "US",
+  },
+};
+
+// Only years/dates verified against the original ticketing pages are listed.
+const editions = [
+  {
+    year: 2016,
+    startDate: "2016-05-13",
+    endDate: "2016-05-13",
+    location: {
+      "@type": "Place",
+      name: "Virginia Beach Resort Hotel",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Virginia Beach",
+        addressRegion: "VA",
+        addressCountry: "US",
+      },
+    },
+  },
+  { year: 2017, startDate: "2017-06-01", endDate: "2017-06-02", location: wyndham },
+  { year: 2018, startDate: "2018-05-17", endDate: "2018-05-18", location: wyndham },
+  { year: 2019, startDate: "2019-06-06", endDate: "2019-06-07", location: wyndham },
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "EventSeries",
+  "@id": "https://revolutionconf.com/#eventseries",
+  name: "RevolutionConf",
+  description,
+  url: "https://revolutionconf.com",
+  eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+  organizer: { "@id": "https://revolutionva.org/#organization" },
+  location: wyndham,
+  subEvent: editions.map((edition) => ({
+    "@type": "Event",
+    name: `RevolutionConf ${edition.year}`,
+    startDate: edition.startDate,
+    endDate: edition.endDate,
+    eventStatus: "https://schema.org/EventScheduled",
+    eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+    location: edition.location,
+    organizer: { "@id": "https://revolutionva.org/#organization" },
+    superEvent: { "@id": "https://revolutionconf.com/#eventseries" },
+  })),
+};
 ---
 
-<Layout title="RevolutionConf">
+<Layout title={title} description={description}>
   <main class="container mx-auto">
-	<div class="mx-auto w-full sm:w-1/2">
-		<Image src={RevConfLogo} alt="RevolutionConf Logo" class="max-h-52 w-auto mx-auto mt-10"  />
-		<div class="text-white">
-			<h1 class="text-4xl font-bold">RevolutionConf</h1>
-			<p class="text-xl pt-5">RevolutionConf was a two-day, software development conference held in Virginia Beach, VA. </p>
-			<p class="text-xl pt-5">There is currently no plan to hold another RevolutionConf.</p> 
-			<p class="text-xl pt-5">However, this can change!  Send us a message at <a class="text-black font-bold hover:underline" href="mailto:team@revolutionva.org">team@revolutionva.org</a> telling us you want to see a new RevolutionConf!</p>
-			<p class="text-xl pt-5">You can also follow us on <a class="text-black font-bold hover:underline" target="_blank" href="https://twitter.com/revconf">X (Twitter)</a> to stay up to date on any future events.</p>
-		</div>
-	</div>
+    <div class="mx-auto w-full sm:w-1/2">
+      <Image
+        src={RevConfLogo}
+        alt="RevolutionConf Logo"
+        width={416}
+        loading="eager"
+        fetchpriority="high"
+        class="max-h-52 w-auto mx-auto mt-10"
+      />
+      <div class="text-white">
+        <h1 class="text-4xl font-bold">RevolutionConf</h1>
+        <p class="text-xl pt-5">
+          RevolutionConf was a two-day, platform- and language-agnostic software
+          development conference held in Virginia Beach, VA. It ran for four
+          years — 2016, 2017, 2018 and 2019 — with the last three editions at
+          the Wyndham Virginia Beach Oceanfront. It was organized by <a
+            class="font-bold underline underline-offset-4 hover:decoration-2"
+            href="https://revolutionva.org">RevolutionVA</a
+          >, a 501(c)(3) nonprofit based in Norfolk, VA.
+        </p>
+        <p class="text-xl pt-5">
+          There is currently no plan to hold another RevolutionConf.
+        </p>
+        <p class="text-xl pt-5">
+          However, this can change! Send us a message at <a
+            class="font-bold underline underline-offset-4 hover:decoration-2"
+            href="mailto:team@revolutionva.org">team@revolutionva.org</a
+          > telling us you want to see a new RevolutionConf!
+        </p>
+        <p class="text-xl pt-5">
+          You can also follow us on <a
+            class="font-bold underline underline-offset-4 hover:decoration-2"
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://twitter.com/revconf">X (Twitter)</a
+          > to stay up to date on any future events.
+        </p>
+      </div>
+    </div>
   </main>
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(structuredData)}
+  />
 </Layout>
-
-<style>
-</style>
