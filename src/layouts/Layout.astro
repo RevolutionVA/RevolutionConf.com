@@ -1,27 +1,102 @@
 ---
 interface Props {
   title: string;
+  description: string;
 }
 
-const { title } = Astro.props;
+const { title, description } = Astro.props;
+
+// Astro.site is set in astro.config.mjs; this yields an absolute, trailing-slash
+// canonical for whichever page is rendering.
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL("/og-image.png", Astro.site);
+
+// Site-wide identity. Per-page entities (the events) live in the page itself.
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://revolutionva.org/#organization",
+      name: "RevolutionVA",
+      description:
+        "A 501(c)(3) nonprofit uniting software developers in Hampton Roads and Virginia through conferences, educational events, and community programs.",
+      url: "https://revolutionva.org",
+      email: "team@revolutionva.org",
+      nonprofitStatus: "Nonprofit501c3",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Norfolk",
+        addressRegion: "VA",
+        addressCountry: "US",
+      },
+      sameAs: [
+        "https://twitter.com/revconf",
+        "https://www.facebook.com/revconf/",
+        "https://github.com/revolutionva",
+      ],
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${Astro.site}#website`,
+      url: Astro.site?.href,
+      name: "RevolutionConf",
+      description,
+      publisher: { "@id": "https://revolutionva.org/#organization" },
+      inLanguage: "en-US",
+    },
+  ],
+};
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="Astro description" />
     <meta name="viewport" content="width=device-width" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="RevolutionConf" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="The RevolutionConf logo on a red background"
+    />
+    <meta property="og:locale" content="en_US" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@revconf" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#B31217" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="//fonts.googleapis.com/css?family=Exo:200,300|Open+Sans:300,400,600"
+      href="https://fonts.googleapis.com/css?family=Exo:200,300,400,700&display=swap"
       rel="stylesheet"
     />
+
     <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
+    <script
+      type="application/ld+json"
+      is:inline
+      set:html={JSON.stringify(structuredData)}
+    />
     <!-- Google tag (gtag.js) -->
     <script
       is:inline
@@ -37,7 +112,7 @@ const { title } = Astro.props;
       gtag("config", "G-2KLPVWGHM7");
     </script>
   </head>
-  <body class="bg-revconf-base">
+  <body class="bg-revconf-deep">
     <slot />
   </body>
 </html>
