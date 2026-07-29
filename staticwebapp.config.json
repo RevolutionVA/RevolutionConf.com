@@ -1,5 +1,19 @@
 {
     "platform": {
         "apiRuntime": "node:18"
+    },
+    "routes": [
+        {
+            "route": "/_astro/*",
+            "headers": {
+                "Cache-Control": "public, max-age=31536000, immutable"
+            }
+        }
+    ],
+    "globalHeaders": {
+        "X-Frame-Options": "SAMEORIGIN"
+    },
+    "mimeTypes": {
+        ".webmanifest": "application/manifest+json"
     }
 }
