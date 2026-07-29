@@ -10,7 +10,11 @@ module.exports = {
       },
       colors: {
         revconf: {
+          // Brand red, taken from the logo. Used for accents/marks.
           base: "#EA262D",
+          // Page background. Darker so white body text clears WCAG AA
+          // (6.96:1 vs 4.36:1 on `base`, which fell short of 4.5:1).
+          deep: "#B31217",
         },
       },
     },
