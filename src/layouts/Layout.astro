@@ -35,6 +35,15 @@ const structuredData = {
         "https://www.facebook.com/revconf/",
         "https://github.com/revolutionva",
       ],
+      // The org's currently-active conference. Declaring it here is what lets a
+      // crawler or model connect this dormant site to the live one, rather than
+      // treating the two domains as unrelated islands.
+      event: {
+        "@type": "EventSeries",
+        name: "Hampton Roads DevFest",
+        url: "https://hrdevfest.org",
+        organizer: { "@id": "https://revolutionva.org/#organization" },
+      },
     },
     {
       "@type": "WebSite",
